@@ -1,4 +1,4 @@
-name: Python CI Pipeline
+name: PyQt6 CI/CD Pipeline
 
 on:
   push:
@@ -8,22 +8,33 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest
+          pip install pyinstaller pytest PyQt6
 
       - name: Run tests
+        run: pytest
+
+      - name: Build .exe with PyInstaller
+        if: success()
         run: |
-          pytest
+          pyinstaller --onefile --noconsole main_qt.py
+          echo "✅ Build complete: dist/main_qt.exe"
+
+      - name: Upload .exe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PyQt6_Calculator_Executable
+          path: dist/main_qt.exe
