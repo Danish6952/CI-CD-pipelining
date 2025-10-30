@@ -30,11 +30,11 @@ jobs:
       - name: Build .exe with PyInstaller
         if: success()
         run: |
-          pyinstaller --onefile --noconsole main_qt.py
-          echo "✅ Build complete: dist/main_qt.exe"
+          pyinstaller --onefile --noconsole main.py
+          echo "✅ Build complete: dist/main.exe"
 
       - name: Upload .exe artifact
         uses: actions/upload-artifact@v4
         with:
           name: PyQt6_Calculator_Executable
-          path: dist/main_qt.exe
+          path: dist/main.exe
