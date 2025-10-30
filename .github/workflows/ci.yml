@@ -33,11 +33,11 @@ jobs:
         run: |
           echo "Building for $RUNNER_OS ..."
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            pyinstaller --onefile --noconsole main_qt.py -n calculator_windows
+            pyinstaller --onefile --noconsole main.py -n calculator_windows
           elif [[ "$RUNNER_OS" == "Linux" ]]; then
-            pyinstaller --onefile main_qt.py -n calculator_linux
+            pyinstaller --onefile main.py -n calculator_linux
           else
-            pyinstaller --onefile main_qt.py -n calculator_mac
+            pyinstaller --onefile main.py -n calculator_mac
           fi
 
       - name: Upload executable artifact
